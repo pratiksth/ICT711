@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox  # To display warning messages
 
 # Conversion functions for different units
 def length_conversion(value, from_unit, to_unit):
@@ -25,12 +26,20 @@ def length_conversion(value, from_unit, to_unit):
 
 # Function to perform the conversion based on the selected input and output units
 def convert_length():
-    input_value = float(entry.get())
-    from_unit = from_unit_var.get()
-    to_unit = to_unit_var.get()
-    
-    result = length_conversion(input_value, from_unit, to_unit)
-    result_label.config(text=f"Result: {result:.2f} {to_unit.lower()}")
+    try:
+        # Try to convert the input to a float
+        input_value = float(entry.get())
+        
+        from_unit = from_unit_var.get()
+        to_unit = to_unit_var.get()
+
+        # Perform conversion
+        result = length_conversion(input_value, from_unit, to_unit)
+        result_label.config(text=f"Result: {result:.2f} {to_unit.lower()}")
+
+    except ValueError:
+        # Show a warning message if the input is not a valid number
+        messagebox.showwarning("Invalid input", "Please enter a valid number (integer or float).")
 
 # Creating the main window
 root = tk.Tk()
